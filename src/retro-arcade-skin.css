@@ -1,0 +1,106 @@
+/* retro-arcade-skin-complete.css */
+:root {
+  --cabinet-bg: #4a4a4a;
+  --header-bg: #2a2a2a;
+  --logo-bg: #1a1a1a;
+  --logo-color: #ffd700;
+  --marquee-bg: #ff4500;
+  --marquee-color: #ffffff;
+  --score-bg: #000000;
+  --score-color: #00ff00;
+  --screen-bg: #000080;
+  --screen-border: #c0c0c0;
+  --screen-text: #ffffff;
+  --dpad-bg: #808080;
+  --dpad-border: #404040;
+  --button-a-bg: #ff0000;
+  --button-b-bg: #0000ff;
+  --button-x-bg: #008000;
+  --button-y-bg: #ffff00;
+  --menu-button-bg: #c0c0c0;
+  --menu-button-color: #000000;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.arcade-cabinet {
+  background-color: var(--cabinet-bg);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.cabinet-header {
+  background-color: var(--header-bg);
+  border-bottom: 2px solid var(--logo-bg);
+}
+
+.logo-band {
+  background-color: var(--logo-bg);
+  color: var(--logo-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.marquee {
+  background-color: var(--marquee-bg);
+}
+
+.marquee-content {
+  color: var(--marquee-color);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.score-display {
+  background-color: var(--score-bg);
+  border-top: 2px solid var(--logo-bg);
+  border-bottom: 2px solid var(--logo-bg);
+}
+
+.score-segment {
+  color: var(--score-color);
+  text-shadow: 0 0 5px var(--score-color);
+}
+
+.screen {
+  background-color: var(--screen-bg);
+  border-color: var(--screen-border);
+  color: var(--screen-text);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.d-pad-button {
+  background-color: var(--dpad-bg);
+  border-color: var(--dpad-border);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.d-pad-button:active {
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.action-button {
+  border-color: #404040;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.action-button:active {
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.button-a { background-color: var(--button-a-bg); }
+.button-b { background-color: var(--button-b-bg); }
+.button-x { background-color: var(--button-x-bg); }
+.button-y { background-color: var(--button-y-bg); }
+
+.menu-button {
+  background-color: var(--menu-button-bg);
+  color: var(--menu-button-color);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.menu-button:active {
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
