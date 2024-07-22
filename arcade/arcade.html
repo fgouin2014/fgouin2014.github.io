@@ -4,39 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Borne d'Arcade Rétro - Mobile</title>
+    <link rel="stylesheet" href="retro-arcade-skin.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #2c3e50;
             font-family: Arial, sans-serif;
             touch-action: manipulation;
         }
         .arcade-cabinet {
             width: 100vw;
             height: 100vh;
-            background-color: #e74c3c;
             display: flex;
             flex-direction: column;
         }
         .cabinet-header {
-            background-color: #34495e;
             padding: 10px;
         }
         .logo-band {
             height: 30px;
-            background-color: #2c3e50;
             margin-bottom: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #ecf0f1;
             font-size: 16px;
             font-weight: bold;
         }
         .marquee {
             height: 30px;
-            background-color: #f39c12;
             overflow: hidden;
             position: relative;
         }
@@ -46,7 +41,6 @@
             height: 100%;
             line-height: 30px;
             text-align: center;
-            color: #2c3e50;
             font-size: 16px;
             font-weight: bold;
             white-space: nowrap;
@@ -60,22 +54,18 @@
             display: flex;
             justify-content: space-around;
             padding: 5px 0;
-            background-color: #2c3e50;
         }
         .score-segment {
             font-family: 'Courier New', monospace;
             font-size: 14px;
-            color: #ecf0f1;
         }
         .screen {
             flex-grow: 1;
-            background-color: #000;
-            border: 5px solid #333;
+            border: 5px solid;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 24px;
-            color: #fff;
             margin: 10px;
         }
         .controls {
@@ -90,8 +80,7 @@
         }
         .d-pad-button {
             position: absolute;
-            background-color: #7f8c8d;
-            border: 2px solid #34495e;
+            border: 2px solid;
             width: 40px;
             height: 40px;
         }
@@ -108,17 +97,12 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            border: 2px solid #34495e;
+            border: 2px solid;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            color: #fff;
         }
-        .button-b { background-color: #e74c3c; }
-        .button-a { background-color: #3498db; }
-        .button-y { background-color: #2ecc71; }
-        .button-x { background-color: #f1c40f; }
         .menu-buttons {
             display: flex;
             justify-content: center;
@@ -128,32 +112,30 @@
         .menu-button {
             width: 80px;
             height: 30px;
-            background-color: #95a5a6;
-            border: 2px solid #34495e;
+            border: 2px solid;
             border-radius: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            color: #2c3e50;
         }
     </style>
 </head>
 <body>
     <div class="arcade-cabinet">
         <div class="cabinet-header">
-            <div class="logo-band">LOGO DU JEU</div>
+            <div class="logo-band">RETRO ARCADE</div>
             <div class="marquee">
-                <div class="marquee-content">TITRE DU JEU QUI DÉFILE</div>
+                <div class="marquee-content">JOUEZ MAINTENANT - MEILLEURS SCORES - NOUVEAUX DÉFIS</div>
             </div>
             <div class="score-display">
                 <div class="score-segment" id="high-score">00000</div>
                 <div class="score-segment" id="current-score">00000</div>
                 <div class="score-segment" id="tries">XXX</div>
-                <div class="score-segment" id="timer">10.000</div>
+                <div class="score-segment" id="timer">00.000</div>
             </div>
         </div>
-        <div class="screen" id="screen">Touchez un bouton</div>
+        <div class="screen" id="screen">Appuyez sur START</div>
         <div class="controls">
             <div class="d-pad">
                 <div class="d-pad-button d-pad-up" data-direction="Haut"></div>
@@ -173,53 +155,7 @@
             <div class="menu-button" data-button="SELECT">SELECT</div>
         </div>
     </div>
-        <div><p>fgouin2014.github.io /src/index.html</p></div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const screen = document.getElementById('screen');
-            const timerElement = document.getElementById('timer');
-            let timeLeft = 10000;
 
-            function updateTimer() {
-                if (timeLeft > 0) {
-                    timeLeft -= 10;
-                    const seconds = Math.floor(timeLeft / 1000);
-                    const milliseconds = timeLeft % 1000;
-                    timerElement.textContent = `${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
-                    setTimeout(updateTimer, 10);
-                }
-            }
-
-            updateTimer();
-
-            function handleButtonPress(e) {
-                e.preventDefault();
-                const button = e.target.closest('[data-button], [data-direction]');
-                if (button) {
-                    if (button.dataset.button) {
-                        screen.textContent = `Bouton : ${button.dataset.button}`;
-                    } else if (button.dataset.direction) {
-                        screen.textContent = `Direction : ${button.dataset.direction}`;
-                    }
-                    button.style.opacity = '0.7';
-                }
-            }
-
-            function handleButtonRelease(e) {
-                e.preventDefault();
-                const button = e.target.closest('[data-button], [data-direction]');
-                if (button) {
-                    button.style.opacity = '1';
-                }
-            }
-
-            document.querySelectorAll('[data-button], [data-direction]').forEach(button => {
-                button.addEventListener('touchstart', handleButtonPress);
-                button.addEventListener('touchend', handleButtonRelease);
-                button.addEventListener('mousedown', handleButtonPress);
-                button.addEventListener('mouseup', handleButtonRelease);
-            });
-        });
-    </script>
+    <script src="retro-arcade-interface-updated.js"></script>
 </body>
 </html>

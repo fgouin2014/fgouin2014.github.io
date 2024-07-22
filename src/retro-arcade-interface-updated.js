@@ -1,4 +1,4 @@
-// retro-arcade-interface.js
+// retro-arcade-interface-updated.js
 class RetroArcadeMachine {
   constructor() {
     this.screen = document.getElementById('screen');
@@ -10,9 +10,11 @@ class RetroArcadeMachine {
     this.currentScore = 0;
     this.highScore = 0;
     this.tries = 3;
+    this.startTime = Date.now();
+    this.errorCount = 0;
 
     this.initializeControls();
-    this.startTimer();
+    this.startGame();
   }
 
   initializeControls() {
@@ -53,45 +55,64 @@ class RetroArcadeMachine {
 
   updateScore(points) {
     this.currentScore += points;
-    this.currentScoreElement.textContent = this.currentScore.toString().padStart(5, '0');
+    this.updateCurrentScore();
     if (this.currentScore > this.highScore) {
       this.highScore = this.currentScore;
-      this.highScoreElement.textContent = this.highScore.toString().padStart(5, '0');
+      this.updateHighScore();
     }
   }
 
-  startTimer() {
-    const updateTimer = () => {
-      if (this.timeLeft > 0) {
-        this.timeLeft -= 10;
-        const seconds = Math.floor(this.timeLeft / 1000);
-        const milliseconds = this.timeLeft % 1000;
-        this.timerElement.textContent = `${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
-        setTimeout(updateTimer, 10);
-      } else {
+  updateHighScore() {
+    this.highScoreElement.textContent = this.highScore.toString().padStart(5, '0');
+  }
+
+  updateCurrentScore() {
+    this.currentScoreElement.textContent = this.currentScore.toString().padStart(5, '0');
+  }
+
+  updateErrorCount() {
+    this.triesElement.textContent = 'X'.repeat(this.tries);
+  }
+
+  updateElapsedTime() {
+    const elapsedTime = Date.now() - this.startTime;
+    const seconds = Math.floor(elapsedTime / 1000);
+    const milliseconds = elapsedTime % 1000;
+    this.timerElement.textContent = `${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+  }
+
+  startGame() {
+    this.startTime = Date.now();
+    this.currentScore = 0;
+    this.updateCurrentScore();
+    this.updateHighScore();
+    this.updateErrorCount();
+    this.updateScreen("Nouvelle partie !");
+
+    // Set up intervals for continuous updates
+    this.elapsedTimeInterval = setInterval(() => this.updateElapsedTime(), 10);
+    this.gameInterval = setInterval(() => this.gameLoop(), 100);
+  }
+
+  gameLoop() {
+    // This method runs every 100ms
+    // Add game logic here, for example:
+    if (Math.random() < 0.05) {  // 5% chance each loop
+      this.errorCount++;
+      if (this.errorCount >= 3) {
         this.endGame();
+      } else {
+        this.tries--;
+        this.updateErrorCount();
       }
-    };
-    updateTimer();
+    }
   }
 
   endGame() {
-    this.updateScreen("Temps écoulé !");
-    this.tries--;
-    this.triesElement.textContent = 'X'.repeat(this.tries);
-    if (this.tries > 0) {
-      setTimeout(() => this.resetGame(), 2000);
-    } else {
-      this.updateScreen("Game Over!");
-    }
-  }
-
-  resetGame() {
-    this.timeLeft = 10000;
-    this.currentScore = 0;
-    this.currentScoreElement.textContent = '00000';
-    this.updateScreen("Nouvelle partie !");
-    this.startTimer();
+    clearInterval(this.elapsedTimeInterval);
+    clearInterval(this.gameInterval);
+    this.updateScreen("Game Over!");
+    // Here you could add logic to restart the game after a delay, show final score, etc.
   }
 }
 
