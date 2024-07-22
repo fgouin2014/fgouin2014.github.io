@@ -4,25 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Borne d'Arcade Rétro - Mobile</title>
-    <link rel="stylesheet" href="main.css">
-    <!-- Remplacer par dev.css pour le mode développement -->
-    <!-- <link rel="stylesheet" href="dev.css"> -->
+    <link rel="stylesheet" href="skin.css">
 </head>
 <body>
     <div class="arcade-cabinet">
         <div class="cabinet-header">
-            <div class="logo-band">RETRO ARCADE</div>
+            <div class="logo-band">LOGO DU JEU</div>
             <div class="marquee">
-                <div class="marquee-content">JOUEZ MAINTENANT - MEILLEURS SCORES - NOUVEAUX DÉFIS</div>
+                <div class="marquee-content">TITRE DU JEU QUI DÉFILE</div>
             </div>
             <div class="score-display">
                 <div class="score-segment" id="high-score">00000</div>
                 <div class="score-segment" id="current-score">00000</div>
                 <div class="score-segment" id="tries">XXX</div>
-                <div class="score-segment" id="timer">00.000</div>
+                <div class="score-segment" id="timer">10.000</div>
             </div>
         </div>
-        <div class="screen" id="screen">Appuyez sur START</div>
+        <div class="screen" id="screen">Touchez un bouton</div>
         <div class="controls">
             <div class="d-pad">
                 <div class="d-pad-button d-pad-up" data-direction="Haut"></div>
@@ -43,6 +41,7 @@
         </div>
     </div>
 
-    <script src="arcade.js"></script>
+    <script src="interface.js"></script>
+
 </body>
 </html>

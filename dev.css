@@ -1,139 +1,113 @@
-/* retro-arcade-skin-dev.css */
-:root {
-  --cabinet-bg: #f0f0f0;
-  --header-bg: #e0e0e0;
-  --logo-bg: #d0d0d0;
-  --logo-color: #000000;
-  --marquee-bg: #ffd700;
-  --marquee-color: #000000;
-  --score-bg: #ffffff;
-  --score-color: #000000;
-  --screen-bg: #ffffff;
-  --screen-border: #000000;
-  --screen-text: #000000;
-  --dpad-bg: #cccccc;
-  --dpad-border: #000000;
-  --button-a-bg: #ffcccc;
-  --button-b-bg: #ccccff;
-  --button-x-bg: #ccffcc;
-  --button-y-bg: #ffffcc;
-  --menu-button-bg: #dddddd;
-  --menu-button-color: #000000;
-}
-
-body {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-.arcade-cabinet {
-  background-color: var(--cabinet-bg);
-  border: 2px solid #000000;
-}
-
-.cabinet-header {
-  background-color: var(--header-bg);
-  border: 1px dashed #000000;
-}
-
-.logo-band {
-  background-color: var(--logo-bg);
-  color: var(--logo-color);
-  border: 1px solid #000000;
-}
-
-.marquee {
-  background-color: var(--marquee-bg);
-  border: 1px solid #000000;
-}
-
-.marquee-content {
-  color: var(--marquee-color);
-}
-
-.score-display {
-  background-color: var(--score-bg);
-  border: 1px solid #000000;
-}
-
-.score-segment {
-  color: var(--score-color);
-  border: 1px dotted #000000;
-  padding: 2px;
-}
-
-.screen {
-  background-color: var(--screen-bg);
-  border: 2px solid var(--screen-border);
-  color: var(--screen-text);
-}
-
-.d-pad-button {
-  background-color: var(--dpad-bg);
-  border: 2px solid var(--dpad-border);
-}
-
-.action-button {
-  border: 2px solid #000000;
-  color: #000000;
-}
-
-.button-a { background-color: var(--button-a-bg); }
-.button-b { background-color: var(--button-b-bg); }
-.button-x { background-color: var(--button-x-bg); }
-.button-y { background-color: var(--button-y-bg); }
-
-.menu-button {
-  background-color: var(--menu-button-bg);
-  color: var(--menu-button-color);
-  border: 2px solid #000000;
-}
-
-/* Dev-specific styles */
-* {
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-}
-
-.arcade-cabinet::before {
-  content: 'Arcade Cabinet';
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 2px 5px;
-  font-size: 10px;
-}
-
-.screen::before {
-  content: 'Screen';
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 2px 5px;
-  font-size: 10px;
-}
-
-.d-pad::before {
-  content: 'D-Pad';
-  position: absolute;
-  top: -15px;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 2px 5px;
-  font-size: 10px;
-}
-
-.action-buttons::before {
-  content: 'Action Buttons';
-  position: absolute;
-  top: -15px;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 2px 5px;
-  font-size: 10px;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            touch-action: manipulation;
+        }
+        .arcade-cabinet {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .cabinet-header {
+            padding: 10px;
+        }
+        .logo-band {
+            height: 30px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .marquee {
+            height: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+        .marquee-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            line-height: 30px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            white-space: nowrap;
+            animation: marquee 10s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .score-display {
+            display: flex;
+            justify-content: space-around;
+            padding: 5px 0;
+        }
+        .score-segment {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .screen {
+            flex-grow: 1;
+            border: 5px solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            margin: 10px;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+        }
+        .d-pad {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+        .d-pad-button {
+            position: absolute;
+            border: 2px solid;
+            width: 40px;
+            height: 40px;
+        }
+        .d-pad-up { top: 0; left: 40px; }
+        .d-pad-down { bottom: 0; left: 40px; }
+        .d-pad-left { left: 0; top: 40px; }
+        .d-pad-right { right: 0; top: 40px; }
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .action-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        .menu-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .menu-button {
+            width: 80px;
+            height: 30px;
+            border: 2px solid;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
