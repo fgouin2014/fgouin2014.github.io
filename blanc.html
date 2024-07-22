@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Borne d'Arcade Rétro - Mobile</title>
+    <link rel="stylesheet" href="dev.css">
+    <!-- Remplacer par dev.css pour le mode développement -->
+    <!-- <link rel="stylesheet" href="main.css"> -->
+</head>
+<body>
+    <div class="arcade-cabinet">
+        <div class="cabinet-header">
+            <div class="logo-band">RETRO ARCADE</div>
+            <div class="marquee">
+                <div class="marquee-content">JOUEZ MAINTENANT - MEILLEURS SCORES - NOUVEAUX DÉFIS</div>
+            </div>
+            <div class="score-display">
+                <div class="score-segment" id="high-score">00000</div>
+                <div class="score-segment" id="current-score">00000</div>
+                <div class="score-segment" id="tries">XXX</div>
+                <div class="score-segment" id="timer">00.000</div>
+            </div>
+        </div>
+        <div class="screen" id="screen">Appuyez sur START</div>
+        <div class="controls">
+            <div class="d-pad">
+                <div class="d-pad-button d-pad-up" data-direction="Haut"></div>
+                <div class="d-pad-button d-pad-down" data-direction="Bas"></div>
+                <div class="d-pad-button d-pad-left" data-direction="Gauche"></div>
+                <div class="d-pad-button d-pad-right" data-direction="Droite"></div>
+            </div>
+            <div class="action-buttons">
+                <div class="action-button button-b" data-button="B">B</div>
+                <div class="action-button button-a" data-button="A">A</div>
+                <div class="action-button button-y" data-button="Y">Y</div>
+                <div class="action-button button-x" data-button="X">X</div>
+            </div>
+        </div>
+        <div class="menu-buttons">
+            <div class="menu-button" data-button="START">START</div>
+            <div class="menu-button" data-button="SELECT">SELECT</div>
+        </div>
+    </div>
+
+    <script src="interface.js"></script>
+</body>
+</html>
