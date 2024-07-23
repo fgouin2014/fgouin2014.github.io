@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composant de Liste de Liens Éditable</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: #000;
+            color: #0ff;
+        }
+
+        .editable-list-container {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0ff;
+            box-shadow: 0 0 20px #0ff;
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+            position: relative;
+            display: none;
+        }
+
+        .editable-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .editable-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #0ff;
+        }
+
+        .editable-list a {
+            color: #0ff;
+            text-decoration: none;
+            flex-grow: 1;
+            padding: 5px;
+        }
+
+        .editable-list a:hover {
+            text-shadow: 0 0 5px #0ff;
+        }
+
+        .edit-btn, .delete-btn, .close-btn {
+            background: transparent;
+            border: none;
+            color: #0ff;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 5px;
+        }
+
+        .edit-icon, .delete-icon, .close-icon {
+            width: 20px;
+            height: 20px;
+            fill: #0ff;
+        }
+
+        #showListButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #0ff;
+            color: #0ff;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        #showListButton:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button id="showListButton">AFFICHER/MASQUER LA LISTE</button>
+
+    <div class="editable-list-container" id="editableListContainer">
+        <button class="close-btn" id="closeButton">
+            <svg class="close-icon" viewBox="0 0 24 24">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </button>
+        <ul class="editable-list" id="editableList"></ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const showListButton = document.getElementById('showListButton');
+            const editableListContainer = document.getElementById('editableListContainer');
+            const editableList = document.getElementById('editableList');
+            const closeButton = document.getElementById('closeButton');
+
+            let links = [];
+
+            function loadLinks() {
+                fetch('links.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        links = data;
+                        renderList();
+                    })
+                    .catch(error => console.error('Erreur lors du chargement des liens:', error));
+            }
+
+            function saveLinks() {
+                // Dans un environnement réel, vous devriez implémenter une API pour sauvegarder les liens côté serveur
+                console.log('Liens sauvegardés:', JSON.stringify(links));
+            }
+
+            function renderList() {
+                editableList.innerHTML = '';
+                links.forEach((link, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <a href="${link.url}" target="_blank">${link.name}</a>
+                        <button class="edit-btn" data-index="${index}">
+                            <svg class="edit-icon" viewBox="0 0 24 24">
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                            </svg>
+                        </button>
+                        <button class="delete-btn" data-index="${index}">
+                            <svg class="delete-icon" viewBox="0 0 24 24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    `;
+                    editableList.appendChild(li);
+                });
+            }
+
+            showListButton.addEventListener('click', () => {
+                editableListContainer.style.display = editableListContainer.style.display === 'none' ? 'block' : 'none';
+                if (editableListContainer.style.display === 'block') {
+                    loadLinks();
+                }
+            });
+
+            closeButton.addEventListener('click', () => {
+                editableListContainer.style.display = 'none';
+            });
+
+            editableList.addEventListener('click', (e) => {
+                const button = e.target.closest('button');
+                if (!button) return;
+
+                const index = parseInt(button.dataset.index);
+
+                if (button.classList.contains('edit-btn')) {
+                    const newName = prompt("Entrez le nouveau nom du lien:", links[index].name);
+                    const newUrl = prompt("Entrez la nouvelle URL du lien:", links[index].url);
+                    if (newName && newUrl) {
+                        links[index] = { name: newName, url: newUrl };
+                        renderList();
+                        saveLinks();
+                    }
+                } else if (button.classList.contains('delete-btn')) {
+                    if (confirm("Êtes-vous sûr de vouloir supprimer ce lien ?")) {
+                        links.splice(index, 1);
+                        renderList();
+                        saveLinks();
+                    }
+                }
+            });
+
+            // Chargement initial des liens
+            loadLinks();
+        });
+    </script>
+</body>
+</html>
