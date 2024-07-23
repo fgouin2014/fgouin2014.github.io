@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Fichiers HTML</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des Fichiers HTML</h1>
+    <ul id="fileList"></ul>
+
+    <script>
+        // Fonction pour charger la liste des fichiers HTML
+        function loadFileList() {
+            fetch('list_files.php')
+                .then(response => response.json())
+                .then(data => {
+                    const fileList = document.getElementById('fileList');
+                    fileList.innerHTML = ''; // Réinitialiser la liste
+                    data.forEach(file => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = file;
+                        a.textContent = file;
+                        li.appendChild(a);
+                        fileList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Erreur:', error));
+        }
+
+        // Charger la liste des fichiers au chargement de la page
+        window.onload = loadFileList;
+    </script>
+</body>
+</html>
