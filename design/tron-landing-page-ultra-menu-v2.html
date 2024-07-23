@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page - Style Tron Ultra avec Liste Éditable V2</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: #000;
+      color: #0ff;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    .grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: rotateX(60deg);
+      animation: moveGrid 20s linear infinite;
+    }
+
+    @keyframes moveGrid {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 0 1000px;
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    h1 {
+      font-size: 4em;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% {
+        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+      }
+
+      100% {
+        text-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff;
+      }
+    }
+
+    p {
+      font-size: 1.5em;
+      color: #0ff;
+      text-shadow: 0 0 5px #0ff;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background: transparent;
+      color: #0ff;
+      text-decoration: none;
+      border: 2px solid #0ff;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+
+    .btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(0, 255, 255, 0.4),
+          transparent);
+      transition: 0.5s;
+    }
+
+    .btn:hover:before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 20px #0ff;
+    }
+
+    .circles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .circles li {
+      position: absolute;
+      display: block;
+      list-style: none;
+      width: 20px;
+      height: 20px;
+      background: rgba(0, 255, 255, 0.2);
+      animation: animate 25s linear infinite;
+      bottom: -150px;
+    }
+
+    @keyframes animate {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+      }
+
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+      }
+    }
+
+    /* Styles pour la liste éditable */
+    .editable-list-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #0ff;
+      box-shadow: 0 0 20px #0ff;
+      padding: 20px;
+      z-index: 10;
+      display: none;
+      max-width: 80%;
+      width: 400px;
+    }
+
+    /* Styles pour la liste éditable */
+    .list-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #0ff;
+      box-shadow: 0 0 20px #0ff;
+      padding: 20px;
+      z-index: 10;
+      display: none;
+      max-width: 80%;
+      width: 400px;
+    }
+
+    .editable-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .editable-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 1px solid #0ff;
+    }
+
+    .editable-list input[type="text"] {
+      background: transparent;
+      border: none;
+      color: #0ff;
+      font-family: 'Orbitron', sans-serif;
+      flex-grow: 1;
+    }
+
+    .editable-list button {
+      background: transparent;
+      border: 1px solid #0ff;
+      color: #0ff;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .add-item-form {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    .add-item-form input[type="text"] {
+      flex-grow: 1;
+      background: transparent;
+      border: 1px solid #0ff;
+      color: #0ff;
+      padding: 5px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .add-item-form button {
+      background: transparent;
+      border: 1px solid #0ff;
+      color: #0ff;
+      cursor: pointer;
+      padding: 5px 10px;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="grid"></div>
+    <ul class="circles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <div class="content">
+      <h1>BIENVENUE DANS LE FUTUR</h1>
+      <p>Découvrez le monde numérique comme jamais auparavant.</p>
+      <button class="btn" id="showListButton">AFFICHER LA LISTE</button>
+      <button class="btn" id="editListButton">ÉDITER LA LISTE</button>
+      <button class="btn" id="okButton">OK</button>
+      </div> 
+  </div>
+
+  <div class="editable-list-container" id="editableListContainer">
+    <ul class="editable-list" id="editableList"></ul>
+    <form class="add-item-form" id="addItemForm">
+      <input type="text" id="newItemInput" placeholder="Nouvel élément" required>
+      <button type="submit">Ajouter</button><br>
+      <button class="btn editable-list" id="fermerButton">Fermer</button>
+    </form>
+  </div>
+
+
+  <div id="copiedEditableListContainer">
+    <ul class="editable-list" id="copiedEditableList"></ul>
+    <form class="add-item-form" id="copiedAddItemForm">
+      <input type="text" id="copiedNewItemInput" placeholder="Nouvel élément" required>
+      <button type="submit">Ajouter</button><br>
+      <button class="btn editable-list" id="copiedFermerButton">Fermer</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('.container');
+      const content = document.querySelector('.content');
+      const editListButton = document.getElementById('editListButton');
+      const editableListContainer = document.getElementById('editableListContainer');
+      const editableList = document.getElementById('editableList');
+      const addItemForm = document.getElementById('addItemForm');
+      const newItemInput = document.getElementById('newItemInput');
+      const showListButton = document.getElementById('showListButton');
+      const okButton = document.getElementById('okButton');
+      const fermerButton = document.getElementById('fermerButton');
+      // Animation effects
+      container.addEventListener('mousemove', (e) => {
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+        content.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+      });
+      container.addEventListener('mouseleave', () => {
+        content.style.transform = 'rotateY(0) rotateX(0)';
+      });
+      // Circles animation
+      const circles = document.querySelectorAll('.circles li');
+      circles.forEach((circle, index) => {
+        circle.style.left = `${Math.random() * 100}%`;
+        circle.style.animationDelay = `${index * 0.5}s`;
+        circle.style.animationDuration = `${25 + Math.random() * 10}s`;
+      });
+      // Editable list functionality
+      let listItems = JSON.parse(localStorage.getItem('listItems')) || ['Élément 1', 'Élément 2', 'Élément 3'];
+
+      function renderList() {
+        editableList.innerHTML = '';
+        listItems.forEach((item, index) => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+                        <input type="text" value="${item}" data-index="${index}">
+                        <button class="delete-btn" data-index="${index}">Supprimer</button>
+                    `;
+          editableList.appendChild(li);
+        });
+      }
+
+      function saveList() {
+        localStorage.setItem('listItems', JSON.stringify(listItems));
+      }
+      editListButton.addEventListener('click', () => {
+        editableListContainer.style.display = editableListContainer.style.display === 'none' ? 'block' : 'none';
+        renderList();
+      });
+      editableList.addEventListener('input', (e) => {
+        if (e.target.tagName === 'INPUT') {
+          const index = e.target.dataset.index;
+          listItems[index] = e.target.value;
+          saveList();
+        }
+      });
+      editableList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+          const index = e.target.dataset.index;
+          listItems.splice(index, 1);
+          renderList();
+          saveList();
+        }
+      });
+      addItemForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newItem = newItemInput.value.trim();
+        if (newItem) {
+          listItems.push(newItem);
+          newItemInput.value = '';
+          renderList();
+          saveList();
+        }
+      });
+      // New buttons functionality (placeholder)
+      showListButton.addEventListener('click', () => {
+        alert('AFFICHER LA LISTE cliqué!');
+      });
+      okButton.addEventListener('click', () => {
+        alert('OK  cliqué!');
+      });
+      fermerButton.addEventListener('click', () => {
+        alert('FERMER cliqué!');
+      });
+      // Initial render
+      renderList();
+    });
+  </script>
+</body>
+
+</html>
