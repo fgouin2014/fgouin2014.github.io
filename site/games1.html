@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nom du Jeu - Style Tron Ultra</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="grid"></div>
+        <div id="menu-container">
+           <div class="grid"></div>
+           <nav>
+                <ul>
+                    <li><a href="accueil.html">Accueil</a></li>
+                    <li><a href="jeux.html">Jeux</a></li>
+                    <li><a href="tutoriels.html">Tutoriels</a></li>
+                    <li><a href="retrogaming.html">Retrogaming</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    <div class="container game">
+        <h1>Nom du Jeu</h1>
+        
+        <div class="game-container">
+            <canvas id="gameCanvas">Votre navigateur ne supporte pas le canvas HTML5.</canvas>
+            <button class="btn" onclick="startGame()">Démarrer le jeu</button>
+        </div>
+
+        <div class="game-info">
+            <div class="game-description">
+                <h2>Description du jeu</h2>
+                <p>Ici, vous pouvez ajouter une description détaillée de votre jeu. Expliquez le concept, l'histoire, ou tout autre élément pertinent pour les joueurs.</p>
+            </div>
+            <div class="game-controls">
+                <h2>Contrôles</h2>
+                <ul>
+                    <li>Flèche gauche: Déplacer à gauche</li>
+                    <li>Flèche droite: Déplacer à droite</li>
+                    <li>Barre d'espace: Tirer</li>
+                    <!-- Ajoutez d'autres contrôles selon votre jeu -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
