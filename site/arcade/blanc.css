@@ -1,0 +1,113 @@
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            touch-action: manipulation;
+        }
+        .arcade-cabinet {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .cabinet-header {
+            padding: 10px;
+        }
+        .logo-band {
+            height: 30px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .marquee {
+            height: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+        .marquee-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            line-height: 30px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            white-space: nowrap;
+            animation: marquee 10s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .score-display {
+            display: flex;
+            justify-content: space-around;
+            padding: 5px 0;
+        }
+        .score-segment {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .screen {
+            flex-grow: 1;
+            border: 5px solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            margin: 10px;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+        }
+        .d-pad {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+        .d-pad-button {
+            position: absolute;
+            border: 2px solid;
+            width: 40px;
+            height: 40px;
+        }
+        .d-pad-up { top: 0; left: 40px; }
+        .d-pad-down { bottom: 0; left: 40px; }
+        .d-pad-left { left: 0; top: 40px; }
+        .d-pad-right { right: 0; top: 40px; }
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .action-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        .menu-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .menu-button {
+            width: 80px;
+            height: 30px;
+            border: 2px solid;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }

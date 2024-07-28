@@ -20,8 +20,8 @@
 /* Définir la police pour led_display_font */
 @font-face {
     font-family: 'led_display_font';
-    src: url('ErbosDraco-Nova-NBP.woff2') format('woff2'),
-         url('ErbosDraco-Nova-NBP.woff') format('woff');
+    src: url('fonts/ErbosDraco-Nova-NBP.woff2') format('woff2'),
+         url('fonts/ErbosDraco-Nova-NBP.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -29,8 +29,8 @@
 /* Définir la police pour led_display_open_font */
 @font-face {
     font-family: 'led_display_open_font';
-    src: url('ErbosDraco-Nova-Open-NBP.woff2') format('woff2'),
-         url('ErbosDraco-Nova-Open-NBP.woff') format('woff');
+    src: url('fonts/ErbosDraco-Nova-Open-NBP.woff2') format('woff2'),
+         url('fonts/ErbosDraco-Nova-Open-NBP.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
