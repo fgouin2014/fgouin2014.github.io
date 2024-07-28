@@ -1,0 +1,19 @@
+Head : 
+<link rel="stylesheet" href="editList.css">
+<script src="editList.js" defer></script>
+
+HTML : 
+<a href="#" class="btn" id="showListButton">AFFICHER LA LISTE</a>
+<a href="#" class="btn" id="editListButton">ÉDITER LA LISTE</a>
+
+<div id="editableListContainer" class="editable-list-container">
+    <ul id="editableList" class="editable-list"></ul>
+    <form id="addLinkForm">
+        <input type="text" id="linkName" placeholder="Nom du lien" required>
+        <input type="url" id="linkUrl" placeholder="URL du lien" required>
+        <button type="submit">Ajouter</button>
+    </form>
+    <button id="addLinkButton" class="btn">Ajouter un lien</button>
+    <button id="closeButton">X</button>
+    <button id="closeListButton" class="btn">FERMER</button>
+</div>
