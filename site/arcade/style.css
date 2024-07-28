@@ -1,0 +1,73 @@
+/* retro-arcade-skin.css */
+:root {
+  --cabinet-bg: #4a4a4a;
+  --header-bg: #2a2a2a;
+  --logo-bg: #1a1a1a;
+  --logo-color: #ffd700;
+  --marquee-bg: #ff4500;
+  --marquee-color: #ffffff;
+  --score-bg: #000000;
+  --score-color: #00ff00;
+  --screen-bg: #000080;
+  --screen-border: #c0c0c0;
+  --screen-text: #ffffff;
+  --dpad-bg: #808080;
+  --dpad-border: #404040;
+  --button-a-bg: #ff0000;
+  --button-b-bg: #0000ff;
+  --button-x-bg: #008000;
+  --button-y-bg: #ffff00;
+  --menu-button-bg: #c0c0c0;
+  --menu-button-color: #000000;
+}
+
+.arcade-cabinet {
+  background-color: var(--cabinet-bg);
+}
+
+.cabinet-header {
+  background-color: var(--header-bg);
+}
+
+.logo-band {
+  background-color: var(--logo-bg);
+  color: var(--logo-color);
+}
+
+.marquee {
+  background-color: var(--marquee-bg);
+}
+
+.marquee-content {
+  color: var(--marquee-color);
+}
+
+.score-display {
+  background-color: var(--score-bg);
+}
+
+.score-segment {
+  color: var(--score-color);
+}
+
+.screen {
+  background-color: var(--screen-bg);
+  border-color: var(--screen-border);
+  color: var(--screen-text);
+}
+
+.d-pad-button {
+  background-color: var(--dpad-bg);
+  border-color: var(--dpad-border);
+}
+
+.button-a { background-color: var(--button-a-bg); }
+.button-b { background-color: var(--button-b-bg); }
+.button-x { background-color: var(--button-x-bg); }
+.button-y { background-color: var(--button-y-bg); }
+
+.menu-button {
+  background-color: var(--menu-button-bg);
+  color: var(--menu-button-color);
+}
+/* skin1 ne pas modifier pour l'instant */
