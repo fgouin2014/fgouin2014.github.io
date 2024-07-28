@@ -1,0 +1,33 @@
+name: Sync to site repository
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v2
+        with:
+          repository: fgouin2014/fgouin2014.github.io
+          path: source
+
+      - name: Checkout target repo
+        uses: actions/checkout@v2
+        with:
+          repository: fgouin2014/site
+          path: target
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync site directory
+        run: |
+          rsync -av --delete source/site/ target/
+          cd target
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "Your Name"
+          git add .
+          git commit -m "Synchronize /site from fgouin2014.github.io"
+          git push origin main
