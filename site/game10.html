@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeu d'Arcade Rétro - Style Tron Ultra</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: #000;
+  color: #0ff;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Navigation */
+nav {
+  width: 100%;
+  z-index: 10;
+  background-color: #000;
+  padding: 10px 0;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav ul li a {
+  color: #0ff;
+  text-decoration: none;
+  font-size: 1.2em;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border: 2px solid #0ff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+nav ul li a:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 20px #0ff, 0 0 30px #0ff, 0 0 40px #0ff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+}
+
+/* Grid Animation */
+.grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: perspective(500px) rotateX(60deg);
+  animation: moveGrid 20s linear infinite;
+  z-index: -1;
+}
+
+@keyframes moveGrid {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 1000px;
+  }
+}
+
+h1,
+h2 {
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+  text-align: center;
+}
+
+/* Game Container */
+.game-container {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #0ff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 0 20px #0ff;
+}
+
+/* Game Info */
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.game-description,
+.game-controls {
+  flex: 1;
+  padding: 20px;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: transparent;
+  color: #0ff;
+  text-decoration: none;
+  border: 2px solid #0ff;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  margin-top: 20px;
+}
+
+.btn:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 10px #0ff;
+}
+
+.arcade-cabinet {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #0ff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 0 20px #0ff;
+}
+
+.cabinet-header {
+  padding: 10px;
+}
+
+.logo-band {
+  height: 30px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.marquee {
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  white-space: nowrap;
+  animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.score-display {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px 0;
+}
+
+.score-segment {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 60vh;
+  aspect-ratio: 4 / 3;
+  background: #000;
+  border: 2px solid #0ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+}
+
+.d-pad-button,
+.action-button,
+.menu-button {
+  background: rgba(0, 255, 255, 0.2);
+  border: 1px solid #0ff;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.d-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.action-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.button-a {
+  background-color: rgba(0, 255, 0, 0.2);
+  border-color: #00ff00;
+  color: #00ff00;
+}
+
+.button-b {
+  background-color: rgba(255, 0, 0, 0.2);
+  border-color: #ff0000;
+  color: #ff0000;
+}
+
+.button-x {
+  background-color: rgba(0, 0, 255, 0.2);
+  border-color: #0000ff;
+  color: #0000ff;
+}
+
+.button-y {
+  background-color: rgba(255, 255, 0, 0.2);
+  border-color: #ffff00;
+  color: #ffff00;
+}
+
+.action-button:active,
+.action-button.pressed,
+.d-pad-button:active,
+.d-pad-button.pressed,
+.menu-button:active,
+.menu-button.pressed {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+  transform: scale(0.95);
+}
+
+.d-pad-button,
+.action-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.menu-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.menu-button {
+  width: 80px;
+  height: 30px;
+  border: 2px solid;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+/* Default X style (uses the site's primary color by default) */
+.error-try {
+  color: #f00;
+}
+
+.error-try-red {
+  color: #f00;
+}
+    
+.screen-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.screen-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #0ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+  font-weight: bold;
+  color: #0ff;
+  transition: all 0.3s ease;
+}
+
+.screen-button[data-button="A"] { border-color: #ff0000; color: #ff0000; }
+.screen-button[data-button="B"] { border-color: #00ff00; color: #00ff00; }
+.screen-button[data-button="X"] { border-color: #0000ff; color: #0000ff; }
+.screen-button[data-button="Y"] { border-color: #ffff00; color: #ffff00; }
+
+.screen-button.active {
+  box-shadow: 0 0 20px currentColor;
+  transform: scale(1.1);
+}
+
+#sequence-display {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-info {
+    flex-direction: column;
+  }
+
+  .game-description,
+  .game-controls {
+    margin: 10px 0;
+  }
+
+  .d-pad-button,
+  .action-button,
+  .menu-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <div class="grid"></div>
+
+  <div class="container">
+    <h1>Jeu d'Arcade Rétro</h1>
+<div class="game-container">
+    <div class="arcade-cabinet">
+      <div class="cabinet-header">
+        <div class="logo-band">RETRO ARCADE</div>
+        <div class="marquee">
+          <div class="marquee-content">JOUEZ MAINTENANT - MEILLEURS SCORES - NOUVEAUX DÉFIS</div>
+        </div>
+        <div class="score-display">
+          <div class="score-segment" id="high-score">00000</div>
+          <div class="score-segment" id="current-score">00000</div>
+          <div class="score-segment" id="tries">XXX</div>
+          <div class="score-segment" id="timer">00.000</div>
+        </div>
+      </div>
+      <div class="screen" id="screen">
+        <div id="main-display">Démarrer Une Nouvelle Partie</div>
+        <div class="screen-buttons">
+          <div class="screen-button" data-button="A">A</div>
+          <div class="screen-button" data-button="B">B</div>
+          <div class="screen-button" data-button="X">X</div>
+          <div class="screen-button" data-button="Y">Y</div>
+        </div>
+        <div id="sequence-display"></div>
+      </div>
+      <div class="controls">
+        <div class="d-pad">
+          <div></div>
+          <div class="d-pad-button d-pad-up" data-direction="Haut">↑</div>
+          <div></div>
+          <div class="d-pad-button d-pad-left" data-direction="Gauche">←</div>
+          <div class="d-pad-button d-pad-down" data-direction="Bas">↓</div>
+          <div class="d-pad-button d-pad-right" data-direction="Droite">→</div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="action-buttons">
+          <div class="action-button button-a" data-button="A">A</div>
+          <div class="action-button button-b" data-button="B">B</div>
+          <div class="action-button button-x" data-button="X">X</div>
+          <div class="action-button button-y" data-button="Y">Y</div>
+        </div>
+      </div>
+      <div class="menu-buttons">
+        <div class="menu-button" data-button="START">START</div>
+        <div class="menu-button" data-button="SELECT">SELECT</div>
+      </div>
+    </div>
+</div>
+  </div>
+<script>
+class RetroArcadeMachine {
+  constructor() {
+    this.mainDisplay = document.getElementById('main-display');
+    this.sequenceDisplay = document.getElementById('sequence-display');
+    this.timerElement = document.getElementById('timer');
+    this.highScoreElement = document.getElementById('high-score');
+    this.currentScoreElement = document.getElementById('current-score');
+    this.triesElement = document.getElementById('tries');
+    this.timeLeft = 10000; // 10 seconds
+    this.currentScore = 0;
+    this.highScore = 0;
+    this.tries = 3;
+    this.sequence = [];
+    this.currentSequenceIndex = 0;
+    this.isGameRunning = false;
+    this.isPaused = false;
+
+    this.initializeControls();
+    this.updateMainDisplay("Démarrer Une Nouvelle Partie");
+  }
+
+  initializeControls() {
+    const buttons = document.querySelectorAll('[data-button]');
+    buttons.forEach(button => {
+      button.addEventListener('click', (e) => this.handleButtonClick(e));
+    });
+
+    document.querySelector('[data-button="START"]').addEventListener('click', (e) => {
+      if (!this.isGameRunning) {
+        this.startGame();
+      } else if (this.isPaused) {
+        this.resumeGame();
+      } else {
+        this.pauseGame();
+      }
+    });
+
+    document.querySelector('[data-button="SELECT"]').addEventListener('click', (e) => {
+      this.resetGame();
+    });
+  }
+
+  handleButtonClick(e) {
+    const button = e.target.closest('[data-button]');
+    if (button && this.isGameRunning && !this.isPaused) {
+      this.checkButton(button.dataset.button);
+    }
+  }
+
+  handleButtonRelease(e) {
+    e.preventDefault();
+    const button = e.target.closest('[data-button]');
+    if (button) {
+      button.classList.remove('pressed');
+    }
+  }
+
+  updateMainDisplay(message) {
+    this.mainDisplay.textContent = message;
+  }
+
+  updateSequenceDisplay(message) {
+    this.sequenceDisplay.textContent = message;
+  }
+
+  updateScore(points) {
+    this.currentScore += points;
+    this.updateCurrentScore();
+    if (this.currentScore > this.highScore) {
+      this.highScore = this.currentScore;
+      this.updateHighScore();
+    }
+  }
+
+  updateHighScore() {
+    this.highScoreElement.textContent = this.highScore.toString().padStart(5, '0');
+  }
+
+  updateCurrentScore() {
+    this.currentScoreElement.textContent = this.currentScore.toString().padStart(5, '0');
+  }
+
+  updateErrorCount() {
+    const xElements = Array.from({ length: 3 }, (_, i) =>
+      `<span class="error-try ${i < this.tries ? '' : 'error-try-red'}">X</span>`
+    ).join('');
+    this.triesElement.innerHTML = xElements;
+  }
+
+  updateElapsedTime() {
+    const seconds = Math.floor(this.timeLeft / 1000);
+    const milliseconds = this.timeLeft % 1000;
+    this.timerElement.textContent = `${seconds.toString().padStart(2, '0')}.${Math.floor(milliseconds / 10).toString().padStart(2, '0')}`;
+  }
+
+  startGame() {
+    this.timeLeft = 10000; // Reset to 10 seconds
+    this.currentScore = 0;
+    this.tries = 3;
+    this.updateCurrentScore();
+    this.updateHighScore();
+    this.updateErrorCount();
+    this.updateMainDisplay("Nouvelle partie !");
+    this.updateSequenceDisplay("");
+    this.isGameRunning = true;
+    this.isPaused = false;
+    this.startCountdown();
+  }
+
+  startCountdown() {
+    let countdownTime = 5000; // 5 seconds countdown
+    const countdownInterval = setInterval(() => {
+      this.updateMainDisplay(`Début dans ${Math.ceil(countdownTime / 1000)}`);
+      countdownTime -= 1000;
+      if (countdownTime < 0) {
+        clearInterval(countdownInterval);
+        this.updateMainDisplay('Mémorisez la séquence');
+        this.startSequence();
+        this.elapsedTimeInterval = setInterval(() => {
+          this.timeLeft -= 100;
+          this.updateElapsedTime();
+          if (this.timeLeft <= 0) {
+            this.endGame();
+          }
+        }, 100);
+      }
+    }, 1000);
+  }
+
+  startSequence() {
+    this.sequence = [];
+    const buttonTypes = ['A', 'B', 'X', 'Y'];
+    for (let i = 0; i < 3; i++) {
+      this.sequence.push(buttonTypes[Math.floor(Math.random() * buttonTypes.length)]);
+    }
+    this.currentSequenceIndex = 0;
+    this.displaySequence();
+  }
+
+  displaySequence() {
+    this.updateSequenceDisplay("");
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < this.sequence.length) {
+        this.highlightButton(this.sequence[index]);
+        this.updateSequenceDisplay(this.sequence.slice(0, index + 1).join(' '));
+        index++;
+      } else {
+        clearInterval(interval);
+        this.updateMainDisplay('Reproduisez la séquence');
+        setTimeout(() => {
+          this.updateSequenceDisplay('À vous de jouer !');
+        }, 1000);
+      }
+    }, 1000);
+  }
+
+  highlightButton(button) {
+    const screenButton = document.querySelector(`.screen-button[data-button="${button}"]`);
+    screenButton.classList.add('active');
+    setTimeout(() => {
+      screenButton.classList.remove('active');
+    }, 500);
+  }
+
+  checkButton(button) {
+    if (this.sequence[this.currentSequenceIndex] === button) {
+      this.updateScore(10);
+      this.currentSequenceIndex++;
+      if (this.currentSequenceIndex >= this.sequence.length) {
+        this.updateSequenceDisplay('Bien joué !');
+        this.timeLeft = 10000; // Reset the time to 10 seconds
+        this.updateElapsedTime();
+        setTimeout(() => this.startSequence(), 1000);
+      }
+    } else {
+      this.updateSequenceDisplay('Erreur !');
+      this.tries--;
+      this.updateErrorCount();
+      if (this.tries <= 0) {
+        this.endGame();
+      } else {
+        setTimeout(() => {
+          this.updateMainDisplay('Mémorisez la séquence');
+          this.currentSequenceIndex = 0;
+          this.displaySequence();
+        }, 1000);
+      }
+    }
+  }
+
+  pauseGame() {
+    clearInterval(this.elapsedTimeInterval);
+    this.isPaused = true;
+    this.updateMainDisplay("Jeu Pausé");
+  }
+
+  resumeGame() {
+    this.isPaused = false;
+    this.updateMainDisplay("Jeu Repris");
+    this.elapsedTimeInterval = setInterval(() => {
+      this.timeLeft -= 100;
+      this.updateElapsedTime();
+      if (this.timeLeft <= 0) {
+        this.endGame();
+      }
+    }, 100);
+  }
+
+  resetGame() {
+    this.isGameRunning = false;
+    this.isPaused = false;
+    clearInterval(this.elapsedTimeInterval);
+    this.updateMainDisplay("Jeu Réinitialisé");
+    this.updateSequenceDisplay("");
+    this.startGame();
+  }
+
+  endGame() {
+    clearInterval(this.elapsedTimeInterval);
+    this.updateMainDisplay("Game Over!");
+    this.updateSequenceDisplay(`Score final : ${this.currentScore}`);
+    this.tries = 0;
+    this.updateErrorCount();
+    this.isGameRunning = false;
+    this.isPaused = false;
+  }
+}
+
+// Initialisation de la machine d'arcade
+document.addEventListener('DOMContentLoaded', () => {
+  const arcadeMachine = new RetroArcadeMachine();
+});
+</script>
